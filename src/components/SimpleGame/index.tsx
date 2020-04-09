@@ -1,13 +1,14 @@
 import React from 'react';
-import {Props} from 'shared/helpers';
 
-export class SimpleGame extends React.Component<any, any> {
+export class SimpleGame extends React.Component<Props, State> {
   canvasRef: React.RefObject<HTMLCanvasElement>;
   ctx: CanvasRenderingContext2D | null = null;
+  state: State;
 
   constructor(props: Props) {
     super(props);
     this.canvasRef = React.createRef();
+    this.state = {level: 0, time: 0}
   }
 
   componentDidMount() {
@@ -21,3 +22,10 @@ export class SimpleGame extends React.Component<any, any> {
     )
   }
 }
+
+interface State {
+  level: number;
+  time: number;
+}
+
+interface Props {}
