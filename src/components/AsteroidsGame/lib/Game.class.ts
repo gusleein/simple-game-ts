@@ -117,6 +117,11 @@ export class Game implements Game {
       const ctx = this.ctx
       ctx.clearRect(0, 0, this.width, this.height)
 
+      this.drawPlayer(ctx)
+    }
+  }
+
+  drawPlayer(ctx: CanvasRenderingContext2D) {
       ctx.save()
       ctx.translate(this.state.position.x, this.state.position.y)
       ctx.rotate((Math.PI/180) * this.state.rotation)
@@ -132,7 +137,6 @@ export class Game implements Game {
       ctx.closePath()
       ctx.stroke()
       ctx.restore()
-    }
   }
 
   loop(timestamp: number) {
