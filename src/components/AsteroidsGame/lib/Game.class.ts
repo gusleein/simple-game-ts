@@ -6,8 +6,11 @@ export class Game implements Game {
 
   width: number = 300;
   height: number = 300;
+  playersInGame: number = 2;
 
-  state: State = {
+
+  players: Player[] = [{
+    color: 'white',
     position: {
       x: this.width / 2,
       y: this.height / 2,
@@ -22,17 +25,45 @@ export class Game implements Game {
       'right': false,
       'up': false,
       'down': false,
+    },
+    keyMap: {
+      68: 'right',
+      65: 'left',
+      87: 'up',
+      83: 'down',
     }
-  }
+  },{
+    color: 'red',
+    position: {
+      x: this.width / 2,
+      y: this.height / 2,
+    },
+    movement: {
+      x: 0,
+      y: 0
+    },
+    rotation: 0,
+    pressedKeys: {
+      'left': false,
+      'right': false,
+      'up': false,
+      'down': false,
+    },
+    keyMap: {
+      39: 'right',
+      37: 'left',
+      38: 'up',
+      40: 'down',
+    }
+  }]
 
-  keyMap: KeyMap = {
-    68: 'right',
-    65: 'left',
-    87: 'up',
-    83: 'down',
-  }
-
-  constructor(ctx?: CanvasRenderingContext2D) {
+  constructor(ctx?: CanvasRenderingContext2D, width?: number, height?: number) {
+    if (width) {
+      this.width = width
+    }
+    if (height) {
+      this.height = height
+    }
     if (ctx) {
       this.ctx = ctx;
       this.loop = this.loop.bind(this)
@@ -48,22 +79,25 @@ export class Game implements Game {
   update(progress: number) {
     const p = progress / 16
 
-    this.updateRotation(p)
-    this.updateMovement(p)
-    this.updatePosition(p)
+    this.updateRotation(p, this.players[0])
+    this.updateRotation(p, this.players[1])
+    this.updateMovement(p, this.players[0])
+    this.updateMovement(p, this.players[1])
+    this.updatePosition(p, this.players[0])
+    this.updatePosition(p, this.players[1])
   }
 
-  updateRotation(p: number) {
-    if (this.state.pressedKeys.left) { 
-      this.state.rotation -= p * 5
+  updateRotation(p: number, state: Player) {
+    if (state.pressedKeys.left) { 
+      state.rotation -= p * 5
     }
-    else if (this.state.pressedKeys.right) {
-      this.state.rotation += p * 5
+    else if (state.pressedKeys.right) {
+      state.rotation += p * 5
     }
   }
 
-  updateMovement(p: number) {
-    const state = this.state
+  updateMovement(p: number, state: Player) {
+
     const accelerationVector = {
       x: p * .2 * Math.cos((state.rotation - 90) * (Math.PI/180)),
       y: p * .2 * Math.sin((state.rotation - 90) * (Math.PI/180))
@@ -92,9 +126,7 @@ export class Game implements Game {
     }
   }
 
-  updatePosition(p: number) {
-    const state = this.state;
-
+  updatePosition(p: number, state: Player) {
     state.position.x += state.movement.x
     state.position.y += state.movement.y
 
@@ -117,16 +149,20 @@ export class Game implements Game {
       const ctx = this.ctx
       ctx.clearRect(0, 0, this.width, this.height)
 
-      this.drawPlayer(ctx)
+      this.drawPlayer(ctx, this.players[0])
+
+      if (this.playersInGame > 1) {
+        this.drawPlayer(ctx, this.players[1])
+      }
     }
   }
 
-  drawPlayer(ctx: CanvasRenderingContext2D) {
+  drawPlayer(ctx: CanvasRenderingContext2D, player: Player) {
       ctx.save()
-      ctx.translate(this.state.position.x, this.state.position.y)
-      ctx.rotate((Math.PI/180) * this.state.rotation)
+      ctx.translate(player.position.x, player.position.y)
+      ctx.rotate((Math.PI/180) * player.rotation)
 
-      ctx.strokeStyle = 'white'
+      ctx.strokeStyle = player.color
       ctx.lineWidth = 2
       ctx.beginPath()
       ctx.moveTo(0, 0)
@@ -150,20 +186,33 @@ export class Game implements Game {
   }
 
   keyDown(e: KeyboardEvent) {
-    let key = this.keyMap[e.keyCode];
-    this.state.pressedKeys[key] = true;
+    let key = this.players[0].keyMap[e.keyCode];
+    this.players[0].pressedKeys[key] = true;
+    
+    if (this.playersInGame > 1){
+      key = this.players[1].keyMap[e.keyCode];
+      this.players[1].pressedKeys[key] = true;
+    }
   }
 
   keyUp(e: KeyboardEvent) {
-    let key = this.keyMap[e.keyCode];
-    this.state.pressedKeys[key] = false;
+    let key = this.players[0].keyMap[e.keyCode];
+    this.players[0].pressedKeys[key] = false;
+
+    if (this.playersInGame > 1){
+      key = this.players[1].keyMap[e.keyCode];
+      this.players[1].pressedKeys[key] = false;
+    }
   }
 }
-interface State {
+
+interface Player {
+  color: string,
   position: {x: number, y: number},
   movement: {x: number, y: number},
   rotation: number,
   pressedKeys: PressedKeys,
+  keyMap: KeyMap,
 }
 
 type KeyMap = {
