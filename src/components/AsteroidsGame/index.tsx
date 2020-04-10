@@ -3,7 +3,7 @@ import Timer from './lib/Timer.class'
 import './styles.css'
 import {Game} from './lib/Game.class'
 
-export class SimpleGame extends React.Component<Props, State> {
+export class AsteroidsGame extends React.Component<Props, State> {
   canvasRef: React.RefObject<HTMLCanvasElement>;
   ctx?: CanvasRenderingContext2D;
   state: State;
@@ -58,3 +58,5 @@ interface State {
 }
 
 interface Props {}
+
+export default AsteroidsGame
