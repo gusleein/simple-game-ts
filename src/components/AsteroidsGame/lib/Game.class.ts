@@ -4,8 +4,8 @@ export class Game implements Game {
   ctx?: CanvasRenderingContext2D;
   lastRender: number = 0;
 
-  width: number = 300;
-  height: number = 300;
+  width: number = 600;
+  height: number = 600;
   playersInGame: number = 2;
 
 
@@ -25,12 +25,14 @@ export class Game implements Game {
       'right': false,
       'up': false,
       'down': false,
+      'fire': false,
     },
     keyMap: {
       68: 'right',
       65: 'left',
       87: 'up',
       83: 'down',
+      32: 'fire',
     }
   },{
     color: 'red',
@@ -48,12 +50,14 @@ export class Game implements Game {
       'right': false,
       'up': false,
       'down': false,
+      'fire': false,
     },
     keyMap: {
       39: 'right',
       37: 'left',
       38: 'up',
       40: 'down',
+      93: 'fire',
     }
   }]
 
@@ -79,12 +83,11 @@ export class Game implements Game {
   update(progress: number) {
     const p = progress / 16
 
-    this.updateRotation(p, this.players[0])
-    this.updateRotation(p, this.players[1])
-    this.updateMovement(p, this.players[0])
-    this.updateMovement(p, this.players[1])
-    this.updatePosition(p, this.players[0])
-    this.updatePosition(p, this.players[1])
+    for (let i = 0; i < this.players.length; i++) {
+      this.updateRotation(p, this.players[i])
+      this.updateMovement(p, this.players[i])
+      this.updatePosition(p, this.players[i])
+    }
   }
 
   updateRotation(p: number, state: Player) {
@@ -155,6 +158,10 @@ export class Game implements Game {
         this.drawPlayer(ctx, this.players[1])
       }
     }
+  }
+
+  drawAsteroid(ctx: CanvasRenderingContext2D, player: Player) {
+    
   }
 
   drawPlayer(ctx: CanvasRenderingContext2D, player: Player) {
