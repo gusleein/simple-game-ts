@@ -10,8 +10,8 @@ export class AsteroidsGame extends React.Component<Props, State> {
   timer: any;
   interval: any;
   game?: Game;
-  width: number = 600
-  height: number = 600
+  width: number = 600;
+  height: number = 600;
 
   constructor(props: Props) {
     super(props);
@@ -21,7 +21,7 @@ export class AsteroidsGame extends React.Component<Props, State> {
 
   componentDidMount() {
     if (this.canvasRef.current) {
-      const ctx = this.canvasRef.current.getContext('2d')
+      const ctx = this.canvasRef.current.getContext('2d');
       this.initGame(ctx);
     }
   }
@@ -46,7 +46,7 @@ export class AsteroidsGame extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        <canvas width={this.width} height={this.height} ref={this.canvasRef} className="SimpleGame_canvas"></canvas>
+        <canvas width={this.width} height={this.height} ref={this.canvasRef} className="SimpleGame_canvas"/>
         <div>{this.state.time}</div>
       </div>
     )

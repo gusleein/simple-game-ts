@@ -59,7 +59,7 @@ export class Game implements Game {
       40: 'down',
       93: 'fire',
     }
-  }]
+  }];
 
   constructor(ctx?: CanvasRenderingContext2D, width?: number, height?: number) {
     if (width) {
@@ -70,22 +70,22 @@ export class Game implements Game {
     }
     if (ctx) {
       this.ctx = ctx;
-      this.loop = this.loop.bind(this)
-      this.keyDown = this.keyDown.bind(this)
-      this.keyUp = this.keyUp.bind(this)
+      this.loop = this.loop.bind(this);
+      this.keyDown = this.keyDown.bind(this);
+      this.keyUp = this.keyUp.bind(this);
 
-      window.requestAnimationFrame(this.loop)
-      window.addEventListener("keydown", this.keyDown, false)
+      window.requestAnimationFrame(this.loop);
+      window.addEventListener("keydown", this.keyDown, false);
       window.addEventListener("keyup", this.keyUp, false)
     }
   }
 
   update(progress: number) {
-    const p = progress / 16
+    const p = progress / 16;
 
     for (let i = 0; i < this.players.length; i++) {
-      this.updateRotation(p, this.players[i])
-      this.updateMovement(p, this.players[i])
+      this.updateRotation(p, this.players[i]);
+      this.updateMovement(p, this.players[i]);
       this.updatePosition(p, this.players[i])
     }
   }
@@ -102,10 +102,10 @@ export class Game implements Game {
   updateMovement(p: number, state: Player) {
 
     const accelerationVector = {
-      x: p * .2 * Math.cos((state.rotation - 90) * (Math.PI/180)),
-      y: p * .2 * Math.sin((state.rotation - 90) * (Math.PI/180))
-    }
-    const speedLimit = 5
+      x: p * .2 * Math.cos((state.rotation - 90) * (Math.PI / 180)),
+      y: p * .2 * Math.sin((state.rotation - 90) * (Math.PI / 180))
+    };
+    const speedLimit = 5;
 
     if (state.pressedKeys.up) {
       state.movement.x += accelerationVector.x;
@@ -130,8 +130,8 @@ export class Game implements Game {
   }
 
   updatePosition(p: number, state: Player) {
-    state.position.x += state.movement.x
-    state.position.y += state.movement.y
+    state.position.x += state.movement.x;
+    state.position.y += state.movement.y;
 
     // detect boundaries
     if (state.position.x > this.width) {
@@ -149,10 +149,10 @@ export class Game implements Game {
 
   draw() {
     if (this.ctx) {
-      const ctx = this.ctx
-      ctx.clearRect(0, 0, this.width, this.height)
+      const ctx = this.ctx;
+      ctx.clearRect(0, 0, this.width, this.height);
 
-      this.drawPlayer(ctx, this.players[0])
+      this.drawPlayer(ctx, this.players[0]);
 
       if (this.playersInGame > 1) {
         this.drawPlayer(ctx, this.players[1])
@@ -165,21 +165,21 @@ export class Game implements Game {
   }
 
   drawPlayer(ctx: CanvasRenderingContext2D, player: Player) {
-      ctx.save()
-      ctx.translate(player.position.x, player.position.y)
-      ctx.rotate((Math.PI/180) * player.rotation)
+    ctx.save();
+    ctx.translate(player.position.x, player.position.y);
+    ctx.rotate((Math.PI / 180) * player.rotation);
 
-      ctx.strokeStyle = player.color
-      ctx.lineWidth = 2
-      ctx.beginPath()
-      ctx.moveTo(0, 0)
-      ctx.lineTo(5, 5)
-      ctx.lineTo(0, -10)
-      ctx.lineTo(-5, 5)
-      ctx.lineTo(0, 0)
-      ctx.closePath()
-      ctx.stroke()
-      ctx.restore()
+    ctx.strokeStyle = player.color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(5, 5);
+    ctx.lineTo(0, -10);
+    ctx.lineTo(-5, 5);
+    ctx.lineTo(0, 0);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.restore()
   }
 
   loop(timestamp: number) {
