@@ -26,4 +26,7 @@ export function cos(v: number): number {
   return Math.cos(d2r(v))
 }
 
-
+// расстояние между двумя точками
+function distance(x0: number, y0: number, x1: number, y1: number): number {
+  return Math.sqrt(Math.pow(x0 - x1, 2) + Math.pow(y0 - y1, 2));
+}

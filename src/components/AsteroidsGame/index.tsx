@@ -1,7 +1,7 @@
 import React from 'react';
 import Timer from './lib/Timer.class'
 import './styles.css'
-import {Game} from './lib/Game.class'
+import {Game} from './Game.class'
 
 export class AsteroidsGame extends React.Component<Props, State> {
   canvasRef: React.RefObject<HTMLCanvasElement>;
