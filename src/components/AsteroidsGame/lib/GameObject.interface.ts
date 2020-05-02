@@ -4,6 +4,10 @@
  *
  * on 01/05/2020.
  */
-export default interface IGameObject {
+import IModel from "components/AsteroidsGame/lib/IModel";
 
+export default interface IGameObject {
+  model: IModel;
+  x: number;
+  y: number;
 }

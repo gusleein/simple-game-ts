@@ -5,8 +5,6 @@
  * on 02/05/2020.
  */
 
-export default class Asteroid {
-  static AsteroidsMaxCount = 6;
-
-
+export default interface IModel {
+  path: number[][]
 }

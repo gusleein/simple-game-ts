@@ -4,6 +4,7 @@
  *
  * on 02/05/2020.
  */
+
 export interface IPlayer {
   bulletsCount?: number;
   lives?: number;
