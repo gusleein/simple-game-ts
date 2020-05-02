@@ -5,7 +5,7 @@
  * on 02/05/2020.
  */
 
-export default class Game {
+export default class GameEngine {
   gameObjects = [];
   gameIsStopped = true;
   asteroidsCount = 0;

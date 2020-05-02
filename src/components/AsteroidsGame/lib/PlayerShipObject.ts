@@ -5,6 +5,6 @@
  * on 02/05/2020.
  */
 
-export default class PlayerShip {
+export default class PlayerShipObject {
 
 }

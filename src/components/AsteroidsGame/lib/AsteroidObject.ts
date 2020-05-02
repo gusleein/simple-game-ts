@@ -4,8 +4,8 @@
  *
  * on 02/05/2020.
  */
-import IGameObject from "./GameObject.interface";
-import IModel from "components/AsteroidsGame/lib/IModel";
+import IGameObject from "./IGameObject";
+import IModel from "./IModel";
 
 export default class AsteroidObject implements IGameObject {
   static AsteroidsMaxCount = 6;
